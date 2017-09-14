@@ -30,19 +30,31 @@ class AccordionGroup extends Component {
 
   render() {
     const {isOpen} = this.state;
+    const {
+      index,
+      group,
+      triggerStyle,
+      triggerClassName,
+      groupStyle,
+      groupClassName,
+    } = this.props;
 
     const {header, body} = this.props.render({
-      index: this.props.index,
-      props: this.props.group,
-      isOpen: this.state.isOpen,
+      index,
+      isOpen,
+      props: group,
       openGroup: this.open,
       closeGroup: this.close,
       toggleGroup: this.toggle,
     });
 
     return (
-      <div className={this.props.groupClassName}>
-        <button onClick={this.toggle} className={this.props.triggerClassName}>
+      <div className={groupClassName} style={groupStyle}>
+        <button
+          onClick={this.toggle}
+          className={triggerClassName}
+          style={triggerStyle}
+        >
           {header()}
         </button>
         <AnimateHeight height={isOpen ? 'auto' : 0}>
@@ -57,10 +69,16 @@ AccordionGroup.propTypes = {
   render: PropTypes.func.isRequired,
   // We deliberately use object because this can be anything and is to be
   // handled by the author in the render func.
-  // eslint-disable-next-line
+  // eslint-disable-next-line react/forbid-prop-types
   group: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
+  // Ignore for style prop
+  // eslint-disable-next-line react/forbid-prop-types
+  triggerStyle: PropTypes.object.isRequired,
   triggerClassName: PropTypes.string.isRequired,
+  // Ignore for style prop
+  // eslint-disable-next-line react/forbid-prop-types
+  groupStyle: PropTypes.object.isRequired,
   groupClassName: PropTypes.string.isRequired,
 };
 
